@@ -19,6 +19,30 @@ decipher_table = {
 message = ["0b00", "0b01", "0b10", "0b11"]
 
 
+def toBinary(message):
+    binaryList = []
+    for c in message:
+        string = "{:08b}".format(ord(c))
+        for i in range(0, len(string), 2):
+            binaryList.append("0b" + string[i:i + 2])
+    return binaryList
+
+
+def toString(messageList):
+    string = ""
+    message = ""
+    for m in messageList:
+        message += m[2:]
+
+    start = 0
+    end = 8
+    while end < len(message) + 1:
+        string += chr(int(message[start:end], 2))
+        start += 8
+        end += 8
+    return string
+
+
 def CBC_CipherMessage(message, IV="0b10"):
     output = []
     for m in message:
@@ -39,5 +63,9 @@ def CBC_DecipherMessage(message, IV="0b10"):
     return output
 
 
-print(CBC_CipherMessage(message))
-print(CBC_DecipherMessage(CBC_CipherMessage(message)))
+userInput = input("Enter plaintext: ")
+plainTextBinary = toBinary(userInput)
+cipherMessage = CBC_CipherMessage(plainTextBinary)
+print("The ciphertexts are: {}".format(cipherMessage))
+print("The deciphered text in binary are: {}".format(CBC_DecipherMessage(cipherMessage)))
+print("The deciphered text is: " + toString(CBC_DecipherMessage(cipherMessage)))
