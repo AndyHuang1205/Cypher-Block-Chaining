@@ -63,9 +63,12 @@ def CBC_DecipherMessage(message, IV="0b10"):
     return output
 
 
+print("CBC-Cypher Block Chaining")
 userInput = input("Enter plaintext: ")
 plainTextBinary = toBinary(userInput)
+
 cipherMessage = CBC_CipherMessage(plainTextBinary)
+print(f"The plaintext in binary in a list is {plainTextBinary}")
 print("The ciphertexts are: {}".format(cipherMessage))
 print("The deciphered text in binary are: {}".format(CBC_DecipherMessage(cipherMessage)))
 print("The deciphered text is: " + toString(CBC_DecipherMessage(cipherMessage)))
